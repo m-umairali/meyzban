@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: meyzban-staging
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1
+    healthCheckPath: /readiness
+    envVars:
+      - key: MEYZBAN_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: SEED_DEMO
+        value: '0'
